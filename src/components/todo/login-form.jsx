@@ -1,4 +1,7 @@
-import react, { Component } from "react";
+import {
+  //  react,
+  Component,
+} from "react";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -6,8 +9,10 @@ class LoginForm extends Component {
     this.state = {
       username: "",
       password: "",
+      hasLoginFailed: false,
     };
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
   }
 
   handleFormChange = (e) => {
@@ -15,12 +20,20 @@ class LoginForm extends Component {
   };
 
   handleLoginClick = (e) => {
-    console.log("click");
+    console.log(this.state);
+    // const { username } = this.state;
+    this.props.history.push(`/home`);
   };
+
   render() {
-    const { username, password } = this.state;
+    const { username, password, hasLoginFailed } = this.state;
     return (
-      <div>
+      <div className="container">
+        {hasLoginFailed && (
+          <div className="alert alert-warning">
+            Sorry, wrong username or password
+          </div>
+        )}
         User Name:{" "}
         <input
           type="text"
@@ -35,7 +48,9 @@ class LoginForm extends Component {
           onChange={this.handleFormChange}
           value={password}
         />
-        <button onClick={this.handleLoginClick}>Loigin</button>
+        <button className="btn btn-success" onClick={this.handleLoginClick}>
+          Loigin
+        </button>
       </div>
     );
   }
