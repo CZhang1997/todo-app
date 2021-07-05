@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import LoginForm from "./login-form";
+import LoginForm from "../authentication/login-form";
 import ListTodos from "./list-todos";
 import ErrorPage from "./error-page";
 import Header from "./header";
-import Logout from "./logout";
+import Logout from "../authentication/logout";
 import Footer from "./footer";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
