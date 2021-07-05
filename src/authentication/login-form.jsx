@@ -2,7 +2,7 @@ import {
   //  react,
   Component,
 } from "react";
-import AuthenticationService from "./authenticationService";
+import AuthenticationService from "./AuthenticationService";
 
 class LoginForm extends Component {
   constructor(props) {

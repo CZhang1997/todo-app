@@ -4,8 +4,9 @@ import ListTodos from "./list-todos";
 import ErrorPage from "./error-page";
 import Header from "./header";
 import Logout from "../authentication/logout";
-import AuthenticationService from "../authentication/authenticationService";
+// import AuthenticationService from "../authentication/AuthenticationService";
 import Footer from "./footer";
+import AuthenticatedRoute from "../authentication/AuthenticatedRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class TodoApp extends Component {
@@ -18,8 +19,8 @@ class TodoApp extends Component {
             <Switch>
               <Route path="/" exact component={LoginForm} />
               <Route path="/login" component={LoginForm} />
-              <Route path="/home" component={ListTodos} />
-              <Route path="/logout" component={Logout} />
+              <AuthenticatedRoute path="/home" component={ListTodos} />
+              <AuthenticatedRoute path="/logout" component={Logout} />
               <Route component={ErrorPage} />
             </Switch>
             <Footer />
