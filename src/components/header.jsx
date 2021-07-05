@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import AuthenticationService from "../authentication/authenticationService";
 
 class Header extends Component {
   constructor(props) {
@@ -34,7 +35,11 @@ class Header extends Component {
               </Link>
             </li>
             <li>
-              <Link className="nav-link" to="/logout">
+              <Link
+                className="nav-link"
+                onClick={AuthenticationService.logout}
+                to="/logout"
+              >
                 Logout
               </Link>
             </li>

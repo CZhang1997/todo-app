@@ -2,6 +2,7 @@ import {
   //  react,
   Component,
 } from "react";
+import AuthenticationService from "./authenticationService";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class LoginForm extends Component {
 
   handleLoginClick = (e) => {
     console.log(this.state);
-    // const { username } = this.state;
+    const { username, password } = this.state;
+    AuthenticationService.registerSuccessfulLogin(username, password);
     this.props.history.push(`/home`);
   };
 
