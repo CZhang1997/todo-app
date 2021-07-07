@@ -15,6 +15,10 @@ class AuthenticationService {
     if (user === null) return false;
     return true;
   }
+
+  getUsername() {
+    return sessionStorage.getItem(AUTHENTICATED_USER);
+  }
 }
 
 export default new AuthenticationService();
