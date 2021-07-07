@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import HelloWorldServices from "../services/HelloWorldServices";
 import TodoDataServices from "../services/TodoDataServices";
 import AuthenticationService from "../authentication/AuthenticationService";
+import { FormattedDate } from "react-intl";
+import moment from "moment";
 
 class ListTodos extends Component {
   constructor(props) {
@@ -9,9 +11,10 @@ class ListTodos extends Component {
     this.state = {
       todo: [],
       message: "",
-      username: "",
     };
     this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this);
+    this.deleteTodoHandler = this.deleteTodoHandler.bind(this);
+    this.updateTodoHandler = this.updateTodoHandler.bind(this);
   }
 
   componentDidMount() {
@@ -19,10 +22,34 @@ class ListTodos extends Component {
     TodoDataServices.getTodoList(username)
       .then((res) => {
         const { data } = res;
-        this.setState({ todo: data, username });
+        this.setState({ todo: data });
       })
       .catch((e) => console.log(e));
   }
+
+  deleteTodoHandler = (id) => {
+    TodoDataServices.deleteItem(id).then((res) => {
+      const { todo } = this.state;
+      console.log(res);
+      this.setState({
+        message: `Delete of todo id${id} successful!`,
+        todo: todo.filter((t) => t.id !== id),
+      });
+    });
+  };
+
+  updateTodoHandler = (id) => {
+    console.log("update");
+    this.props.history.push(`/todos/${id}`);
+    // TodoDataServices.deleteItem(id).then((res) => {
+    //   const { todo } = this.state;
+    //   console.log(res);
+    //   this.setState({
+    //     message: `Delete of todo id${id} successful!`,
+    //     todo: todo.filter((t) => t.id !== id),
+    //   });
+    // });
+  };
 
   retrieveWelcomeMessage() {
     // HelloWorldServices.executeHelloWorldService()
@@ -62,7 +89,7 @@ class ListTodos extends Component {
   }
   render() {
     // const { name = "" } = this.props.match.params;
-    const { todo, message, username } = this.state;
+    const { todo, message } = this.state;
     return (
       <div className="welcome">
         {message ? (
@@ -80,23 +107,34 @@ class ListTodos extends Component {
                 <th>description</th>
                 <th>is Completed</th>
                 <th>Target Date</th>
+                <th>Update</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
               {todo.map((i) => {
                 const { id, description, done, targetDate } = i;
+                const d = new Date(targetDate);
                 return (
                   <tr key={id}>
                     <th>{description}</th>
                     <th>{done ? "yes" : "no"}</th>
-                    <th>{targetDate}</th>
+                    <th>{moment(targetDate).format("YYYY-MM-DD")}</th>
                     <th>
                       {
                         <button
-                          onClick={() =>
-                            TodoDataServices.deleteItem(username, id)
-                          }
+                          className="btn btn-success"
+                          onClick={() => this.updateTodoHandler(id)}
+                        >
+                          Update
+                        </button>
+                      }
+                    </th>
+                    <th>
+                      {
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => this.deleteTodoHandler(id)}
                         >
                           Delete
                         </button>
@@ -107,6 +145,14 @@ class ListTodos extends Component {
               })}
             </tbody>
           </table>
+          <div className="row">
+            <button
+              className="btn btn-success"
+              onClick={() => this.props.history.push("/todos/0")}
+            >
+              Add
+            </button>
+          </div>
         </div>
       </div>
     );
