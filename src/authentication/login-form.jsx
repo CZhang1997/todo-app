@@ -23,8 +23,18 @@ class LoginForm extends Component {
   handleLoginClick = (e) => {
     console.log(this.state);
     const { username, password } = this.state;
-    AuthenticationService.registerSuccessfulLogin(username, password);
-    this.props.history.push(`/home`);
+    AuthenticationService.executeLoginCheck(username, password)
+      .then((res) => {
+        console.log(res);
+        AuthenticationService.registerSuccessfulLogin(username, password);
+        this.props.history.push(`/home`);
+      })
+      .catch((e) => {
+        this.setState({
+          hasLoginFailed: true,
+        });
+        console.log(e);
+      });
   };
 
   render() {

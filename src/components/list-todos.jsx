@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import HelloWorldServices from "../services/HelloWorldServices";
 import TodoDataServices from "../services/TodoDataServices";
 import AuthenticationService from "../authentication/AuthenticationService";
-import { FormattedDate } from "react-intl";
 import moment from "moment";
 
 class ListTodos extends Component {
@@ -79,11 +78,11 @@ class ListTodos extends Component {
       })
       .catch((e) => {
         console.log(e.response);
-        const {
-          data: { message: data },
-        } = e.response;
+        // const {
+        //   data: { message: data },
+        // } = e.response;
         this.setState({
-          message: data,
+          message: "fetch fail",
         });
       });
   }
@@ -114,7 +113,6 @@ class ListTodos extends Component {
             <tbody>
               {todo.map((i) => {
                 const { id, description, done, targetDate } = i;
-                const d = new Date(targetDate);
                 return (
                   <tr key={id}>
                     <th>{description}</th>

@@ -1,30 +1,40 @@
-import axios from "axios";
 import AuthenticationService from "../authentication/AuthenticationService";
-
+import AxiosClient from "../authentication/utils/AxiosClient";
 export const URL = "http://localhost:8080";
 
 class TodoDataService {
   getTodoList(username) {
-    return axios.get(`${URL}/user/${username}/todos`);
+    // const cookies = new Cookies();
+    // const basicAuthHeader = cookies.get("basicAuthToken");
+    // return axios.get(`${URL}/user/${username}/todos`, {
+    //   headers: {
+    //     authorization: basicAuthHeader + "1as",
+    //   },
+    // });
+    return AxiosClient.get(`${URL}/user/${username}/todos`);
   }
   //   /user/{username}/todos/{id}
 
   deleteItem(id) {
     const username = AuthenticationService.getUsername();
-    return axios.delete(`${URL}/user/${username}/todos/${id}`);
+    return AxiosClient.delete(`${URL}/user/${username}/todos/${id}`);
   }
 
   getItemById(id) {
     const username = AuthenticationService.getUsername();
-    return axios.get(`${URL}/user/${username}/todos/${id}`);
+    return AxiosClient.get(`${URL}/user/${username}/todos/${id}`);
   }
 
-  updateItemById(id, todo) {
+  updateItemById(id = 0, todo) {
     const username = AuthenticationService.getUsername();
-    return axios.put(`${URL}/user/${username}/todos/${id}`, {
-      ...todo,
-      username,
-    });
+    return AxiosClient.put(
+      `${URL}/user/${username}/todos/${id}`,
+      {},
+      {
+        ...todo,
+        username,
+      }
+    );
   }
 }
 

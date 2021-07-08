@@ -17,7 +17,7 @@ class TodoItem extends Component {
   componentDidMount() {
     const { id } = this.state;
 
-    id != 0 &&
+    id !== 0 &&
       TodoDataServices.getItemById(this.props.match.params.id).then((res) => {
         //   console.log(res);
         const {
@@ -33,7 +33,6 @@ class TodoItem extends Component {
   }
 
   onSubmitHandler = (value) => {
-    console.log(value);
     const { description, targetDate } = value;
     const { id } = this.state;
     TodoDataServices.updateItemById(id, {
@@ -48,7 +47,7 @@ class TodoItem extends Component {
 
   validateHandler = (value) => {
     let errors = {};
-    const { description, targetDate } = value;
+    const { description } = value;
     if (!description) {
       errors.description = "Enter a Description";
     }

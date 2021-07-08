@@ -1,18 +1,26 @@
-import axios from "axios";
+import AxiosClient from "../authentication/utils/AxiosClient";
 
 export const URL = "http://localhost:8080";
 
 class HelloWorldService {
   executeHelloWorldService() {
-    return axios.get(URL + "/hello-world");
+    return AxiosClient.get(URL + "/hello-world");
   }
 
   getHelloWorldBean() {
-    return axios.get(URL + "/hello-world-bean");
+    return AxiosClient.get(URL + "/hello-world-bean");
   }
 
   getHelloWorldPath(name) {
-    return axios.get(URL + "/hello-world/" + name);
+    // let username = "czhang1997";
+    // let pw = "password";
+    // let basicAuthHeader = "Basic " + window.btoa(username + ":" + pw);
+    return AxiosClient.get(URL + "/hello-world/" + name, {
+      // headers: {
+      //   authorization: basicAuthHeader,
+      //   "Access-Control-Allow-Origin": true,
+      // },
+    });
   }
 }
 
