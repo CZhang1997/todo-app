@@ -9,7 +9,7 @@ class AxiosClient {
     const basicAuthHeader = cookies.get("basicAuthToken");
     return axios.get(url, {
       headers: {
-        authorization: basicAuthHeader,
+        Authorization: basicAuthHeader,
         ...headers,
       },
     });
@@ -23,7 +23,7 @@ class AxiosClient {
       { ...body },
       {
         headers: {
-          authorization: basicAuthHeader,
+          Authorization: basicAuthHeader,
           ...headers,
         },
       }
@@ -38,7 +38,7 @@ class AxiosClient {
       { ...data },
       {
         headers: {
-          authorization: basicAuthHeader,
+          Authorization: basicAuthHeader,
           ...headers,
         },
       }
@@ -50,7 +50,7 @@ class AxiosClient {
     const basicAuthHeader = cookies.get("basicAuthToken");
     return axios.delete(url, {
       headers: {
-        authorization: basicAuthHeader,
+        Authorization: basicAuthHeader,
         ...headers,
       },
     });

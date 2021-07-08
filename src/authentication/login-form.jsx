@@ -26,7 +26,10 @@ class LoginForm extends Component {
     AuthenticationService.executeLoginCheck(username, password)
       .then((res) => {
         console.log(res);
-        AuthenticationService.registerSuccessfulLogin(username, password);
+        const {
+          data: { token },
+        } = res;
+        AuthenticationService.registerSuccessfulLogin(token, username);
         this.props.history.push(`/home`);
       })
       .catch((e) => {

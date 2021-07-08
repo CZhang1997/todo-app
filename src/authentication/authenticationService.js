@@ -1,31 +1,30 @@
 import axios from "axios";
 import { URL } from "../services/TodoDataServices";
 import Cookies from "universal-cookie";
+import AxiosClient from "./utils/AxiosClient";
 
 export const AUTHENTICATED_USER = "AUTHENTICATED_USER";
 
 class AuthenticationService {
   executeLoginCheck(username, password) {
-    return axios.get(URL + "/basicAuth", {
-      headers: {
-        authorization: this.createBasicAuthToken(username, password),
-        // "Access-Control-Allow-Origin": true,
-      },
-    });
+    return AxiosClient.post(URL + "/authenticate", {}, { username, password });
+    // return axios.get(URL + "/basicAuth", {
+    //   headers: {
+    //     authorization: this.createBasicAuthToken(username, password),
+    //     // "Access-Control-Allow-Origin": true,
+    //   },
+    // });
   }
 
   createBasicAuthToken(username, password) {
     return "Basic " + window.btoa(username + ":" + password);
   }
-  registerSuccessfulLogin(username, password) {
+  registerSuccessfulLogin(token, username) {
     sessionStorage.setItem(AUTHENTICATED_USER, username);
     const cookies = new Cookies();
-    cookies.set(
-      "basicAuthToken",
-      this.createBasicAuthToken(username, password)
-    );
+    cookies.set("basicAuthToken", "Bearer " + token);
     console.log(cookies.get("basicAuthToken"));
-    this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
+    // this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
   }
 
   logout() {
